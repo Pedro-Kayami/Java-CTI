@@ -1,15 +1,18 @@
 import java.util.Scanner;
 
-import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Formatter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.io.IOException;
 
 class Crud {
     static Scanner teclado = new Scanner(System.in);
     static ArrayList lista = new ArrayList();
     static Jogos j;
-    static String xnom, xestudio, xcategoria, xpreco, xconf, xop;
+    static String xid, xnom, xestudio, xcategoria, xpreco, xconf, xop;
 
     public static void cls() {
         try {
@@ -24,14 +27,17 @@ class Crud {
 
     public static void main(String[] args) {
         int opcao = 0;
+        lerTexto();
         while (true) {
             cls();
             System.out.println("Menu de opcões - Sistema Jogos");
+            System.out.println("Tamanho da lista= " + lista.size());
             System.out.println("1 - Incluir Jogo");
             System.out.println("2 - Alterar Jogo");
             System.out.println("3 - Excluir Jogo");
             System.out.println("4 - Listar todos Jogos");
             System.out.println("5 - Fim processametno");
+            System.out.println("6 - Classificar pro nome");
             xop = Digita("Opcao(1 - 5)?");
             try {
                 opcao = 0;
@@ -51,7 +57,11 @@ class Crud {
             if (opcao == 1) {
                 Incluir();
             }
-            if (opcao < 1 || opcao > 5) {
+
+            if (opcao == 6) {
+                ClassifNome();
+            }
+            if (opcao < 1 || opcao > 6) {
                 Espera("Opção Invalida");
             }
 
@@ -75,7 +85,7 @@ class Crud {
     public static String Digita(String txt) {
         String texto = "";
         System.out.println(txt);
-        texto = teclado.next();
+        texto = teclado.nextLine().toUpperCase();
         return texto;
     }
 
@@ -103,6 +113,7 @@ class Crud {
             j.setPreco(npreco);
             lista.add(j);
             System.out.println("Adicionado Jogo");
+            gravaTexto();
         } else {
             System.out.println("Não faz nada");
         }
@@ -209,6 +220,66 @@ class Crud {
                 continue;
             }
             Espera("Opcao Invalida!!");
+        }
+    }
+
+    public static void gravaTexto() {
+        try {
+            Formatter arquivo = new Formatter("Jogos.txt");
+            for (int i = 0; i < lista.size(); i++) {
+                Jogos aux = (Jogos) lista.get(i);
+                xid = "" + aux.getId();
+                xnom = aux.getNome();
+                xestudio = aux.getEstudio();
+                xcategoria = aux.getCategoria();
+                xpreco = "" + aux.getPreco();
+                arquivo.format("%s,%s,%s,%s,%s,\n", xid, xnom, xestudio, xcategoria, xpreco);
+                Espera(xnom + "Gravando = " + i);
+
+            } // for
+            arquivo.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Erro gravacao=" + e);
+        }
+    }
+
+    public static void ClassifNome() {
+        Listar();
+        Collections.sort(lista);
+        Listar();
+        gravaTexto();
+    }
+
+    public static void lerTexto() {
+        try {
+            File arquivo = new File("Jogos.txt");
+            if (!arquivo.exists()) {
+                System.out.println("Arquivo nao existe!!!!!");
+                return;
+            }
+            Scanner sc = new Scanner(arquivo);
+            sc.useDelimiter("\\s*,\\s*");
+            if (lista.size() > 0) {
+                lista.clear();
+            }
+            while (sc.hasNext()) {
+                xid = sc.next();
+                xnom = sc.next();
+                xestudio = sc.next();
+                xcategoria = sc.next();
+                xpreco = sc.next();
+                Jogos aux = new Jogos();
+                aux.setId(Integer.parseInt(xid));
+                aux.setEstudio(xnom);
+                aux.setEstudio(xestudio);
+                aux.setCategoria(xcategoria);
+                double npreco = Double.parseDouble(xpreco);
+                aux.setPreco(npreco);
+                lista.add(aux);
+            } /// while
+            sc.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Erro leitura=" + e);
         }
     }
 }

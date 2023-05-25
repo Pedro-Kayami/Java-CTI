@@ -1,9 +1,18 @@
-class Jogos {
+class Jogos implements Comparable<Jogos> {
     private int id_jogo;
     private String nome_jogo;
     private String categoria;
     private String estudio;
     private double preco;
+
+    public int compareTo(Jogos outra) {
+        if (this.nome_jogo.compareTo(outra.getNome()) < 0)
+            return -1;
+        else if (this.nome_jogo.compareTo(outra.getNome()) > 0)
+            return 1;
+        else
+            return 0;
+    }
 
     Jogos() {
         setId(0);
