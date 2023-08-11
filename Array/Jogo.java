@@ -1,9 +1,10 @@
 class Jogos implements Comparable<Jogos> {
-    private int id_jogo;
+    private long id_jogo;
     private String nome_jogo;
     private String categoria;
     private String estudio;
     private double preco;
+    private byte[] foto;
 
     public int compareTo(Jogos outra) {
         if (this.nome_jogo.compareTo(outra.getNome()) < 0)
@@ -20,9 +21,10 @@ class Jogos implements Comparable<Jogos> {
         setCategoria("");
         setEstudio("");
         setPreco(0.0);
+        setFoto(null);
     }
 
-    public void setId(int i) {
+    public void setId(long i) {
         this.id_jogo = i;
     }
 
@@ -42,12 +44,20 @@ class Jogos implements Comparable<Jogos> {
         this.preco = p;
     }
 
-    public int getId() {
+    public void setFoto(byte[] f) {
+        this.foto = f;
+    }
+
+    public long getId() {
         return this.id_jogo;
     }
 
     public String getNome() {
         return this.nome_jogo;
+    }
+
+    public byte[] getFoto() {
+        return this.foto;
     }
 
     public String getCategoria() {
