@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Formatter;
 
 public class arquivotxt {
-    
+
     public static void gravaTexto(String nomeArquivo) {
         try {
             Formatter arquivo = new Formatter(nomeArquivo);

@@ -36,7 +36,8 @@ class Crud {
             System.out.println("4 - Listar todos Jogos");
             System.out.println("5 - Fim processamento");
             System.out.println("6 - Classificar");
-            xop = Digita("Opção (1 - 5):");
+            System.out.println("7 - Procurar Jogos");
+            xop = Digita("Opção (1 - 7):");
             try {
                 opcao = Integer.parseInt(xop);
             } catch (NumberFormatException e) {
@@ -54,6 +55,8 @@ class Crud {
                 ClassifNome();
             } else if (opcao == 5) {
                 break;
+            } else if (opcao == 7) {
+                Procurar();
             } else {
                 Espera("Opção Inválida");
             }
@@ -119,6 +122,7 @@ class Crud {
                             ", Estúdio: " + jj.getEstudio() +
                             ", Preço: " + jj.getPreco());
         }
+        Espera("Tecle <enter>");
     }
 
     public static void Excluir() {
@@ -252,6 +256,75 @@ class Crud {
         }
         Listar();
         gravaTexto();
+    }
+
+    public static void Procurar() {
+        Scanner inputScanner = new Scanner(System.in);
+        int opcao = 0;
+        while (true) {
+            System.out.println("Selecione o criterio de busca:");
+            System.out.println("1. Procurar por Nome");
+            System.out.println("2. Procurar por ");
+            System.out.println("3. Procurar por Preco");
+            System.out.println("4. Procurar por Categoria");
+            try {
+                xop = Digita("Opcao: ");
+                opcao = Integer.parseInt(xop);
+                inputScanner.nextLine();
+                String pesq = Digita("Digite o termo: ");
+                List<Jogos> matchingGames = new ArrayList<>();
+                switch (opcao) {
+                    case 1:
+                        for (Jogos jogo : lista) {
+                            if (jogo.getNome().toLowerCase().contains(pesq.toLowerCase())) {
+                                matchingGames.add(jogo);
+                            }
+                        }
+                        break;
+                    case 2:
+                        for (Jogos jogo : lista) {
+                            if (jogo.getEstudio().toLowerCase().contains(pesq.toLowerCase())) {
+                                matchingGames.add(jogo);
+                            }
+                        }
+                        break;
+                    case 3:
+                        for (Jogos jogo : lista) {
+                            if (String.valueOf(jogo.getPreco()).toLowerCase().contains(pesq.toLowerCase())) {
+                                matchingGames.add(jogo);
+                            }
+                        }
+                        break;
+                    case 4:
+                        for (Jogos jogo : lista) {
+                            if (jogo.getCategoria().toLowerCase().contains(pesq.toLowerCase())) {
+                                matchingGames.add(jogo);
+                            }
+                        }
+                        break;
+                    default:
+                        System.out.println("Opção inválida.");
+                        return;
+                }
+
+                if (!matchingGames.isEmpty()) {
+                    System.out.println("Jogos com correspondencia no criterio de busca:");
+                    for (Jogos jogo : matchingGames) {
+                        System.out.println("ID: " + jogo.getId());
+                        System.out.println("Nome: " + jogo.getNome());
+                        System.out.println("Estudio: " + jogo.getEstudio());
+                        System.out.println("Categoria: " + jogo.getCategoria());
+                        System.out.println("Preco: " + jogo.getPreco());
+                        System.out.println();
+                    }
+                } else {
+                    System.out.println("Nenhum jogo encontrado com base no critério de busca.");
+                }
+                Espera("Tecle <enter>");
+            } catch (NumberFormatException e) {
+                Espera("Valor Inválido!!");
+            }
+        }
     }
 
     public static void lerTexto() {
