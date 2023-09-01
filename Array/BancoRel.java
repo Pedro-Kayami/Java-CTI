@@ -39,7 +39,7 @@ class BancoRel {
         HashMap parametros;
 
         try {
-            url = "jdbc:sqlite:C:\\Users\\pedro\\Documents\\Castro\\Java-CTI\\3BM\\Jogos.db";
+            url = "jdbc:sqlite:C:\\Users\\pedro\\Documents\\Castro\\Java-CTI\\Array\\Jogos.db";
 
             Class.forName("org.sqlite.JDBC");
 
@@ -56,9 +56,10 @@ class BancoRel {
             jrRS = new JRResultSetDataSource(rs);
 
             parametros = new HashMap();
-            JasperPrint impressao = JasperFillManager.fillReport(
-
-                    show();
+            JasperPrint impressao = JasperFillManager.fillReport("C:\\Users\\pedro\\Documents\\Castro\\Java-CTI\\Array\\RealJogos.jasper" , parametros,    jrRS );
+ 		    //exibe o resultado
+		    JasperViewer viewer2 = new JasperViewer( impressao , false );
+		    viewer2.show();
 
             // outro jeito de mostrar o relatorio
             // System.out.println("jrRS realizada !!!!");
@@ -75,7 +76,7 @@ class BancoRel {
             // fechando o banco
             stmt.close();
             con.close();
-
+            
         } // try
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "ERRO relatorio=" + e);

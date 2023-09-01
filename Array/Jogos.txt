@@ -1,3 +1,4 @@
-3,ASD,ASD,GFSDG,1.0,
-1,PEDRO,PEDRO,PEDRO,12.0,
-2,PEDR,ASDA,ASD,34.0,
+1,Dark Souls,Mojang,Sols Like,50.0,foto1.png,
+10,Pokemon,Bandai,RPG,780.0,foto10.png,
+12,jogo,cti,rpg,500.0,foto12.png,
+

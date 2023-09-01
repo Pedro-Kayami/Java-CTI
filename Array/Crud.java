@@ -63,7 +63,7 @@ class Crud {
         }
     }
 
-    public static int GerarId() {
+    public static long GerarId() {
         if (lista.isEmpty()) {
             return 1;
         }
